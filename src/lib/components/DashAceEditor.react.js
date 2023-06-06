@@ -7,16 +7,45 @@ import 'ace-builds/src-min-noconflict/ext-language_tools';
 import 'ace-builds/src-min-noconflict/ext-searchbox';
 import 'ace-builds/src-min-noconflict/ext-spellcheck';
 
-import "ace-builds/src-min-noconflict/mode-python";
-import "ace-builds/src-min-noconflict/mode-sql";
-import "ace-builds/src-min-noconflict/theme-github";
-import "ace-builds/src-min-noconflict/theme-monokai";
-import "ace-builds/src-min-noconflict/theme-tomorrow";
-import "ace-builds/src-min-noconflict/theme-twilight";
-import "ace-builds/src-min-noconflict/theme-textmate";
 
 import CustomMode from "./CustomPythonMode";
 import './diff_editor.css';
+const languages = [
+  "apache_conf",
+  "dockerfile",
+  "html",
+  "ini",
+  "javascript",
+  "json",
+  "markdown",
+  "nginx",
+  "sql",
+  "text",
+  "yaml",
+  "xml"
+];
+
+languages.forEach(lang => {
+  require(`ace-builds/src-noconflict/mode-${lang}`);
+  require(`ace-builds/src-noconflict/snippets/${lang}`);
+});
+
+
+const themes = [
+  "monokai",
+  "github",
+  "tomorrow",
+  "kuroir",
+  "twilight",
+  "xcode",
+  "textmate",
+  "solarized_dark",
+  "solarized_light",
+  "terminal"
+];
+
+
+themes.forEach(theme => require(`ace-builds/src-noconflict/theme-${theme}`));
 
 /**
  * Dash component wraps up react-ace editor
@@ -97,7 +126,7 @@ export default class DashAceEditor extends Component {
             return (
                 <DiffEditor
                     ref="aceEditor"
-                    mode={(mode !== 'python' && mode !== 'javascript' && mode !== 'sql')? 'python': mode}
+                    mode={languages.includes(mode)? mode : 'text'}
                     theme={theme}
                     value={value}
                     className={classnames('container__editor', className)}
@@ -131,10 +160,10 @@ export default class DashAceEditor extends Component {
         return (
             <AceEditor
                 ref="aceEditor"
-                mode={(mode !== 'python' && mode !== 'javascript' && mode !== 'sql')? 'python': mode}
+	        mode={languages.includes(mode)? mode : 'text'}
                 theme={theme}
                 value={value}
-				        className={classnames('container__editor', className)}
+	        className={classnames('container__editor', className)}
                 onChange={code => setProps({ value: code })}
                 onLoad={editor => this.customize(editor)}
                 name={id}
@@ -171,7 +200,7 @@ export default class DashAceEditor extends Component {
 DashAceEditor.defaultProps = {
     id: 'ace-editor',
     placeholder: 'Type code here ...',
-    mode: 'python',
+    mode: 'yaml',
     syntaxKeywords: {
         "variable.language": "this|super|self|",
         "support.function": "enumerate|range|pow|sum|abs|max|min|argmax|argmin|len|mean|std|median|all|any|",

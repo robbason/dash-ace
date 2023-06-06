@@ -119,7 +119,7 @@
         "required": false,
         "description": "Language for parsing and code highlighting",
         "defaultValue": {
-          "value": "'python'",
+          "value": "'yaml'",
           "computed": false
         }
       },

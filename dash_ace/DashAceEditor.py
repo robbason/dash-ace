@@ -68,7 +68,7 @@ Keyword arguments:
 - minLines (number; optional):
     Minimum number of lines to be displayed.
 
-- mode (string; default 'python'):
+- mode (string; default 'yaml'):
     Language for parsing and code highlighting.
 
 - orientation (string; default 'below'):
